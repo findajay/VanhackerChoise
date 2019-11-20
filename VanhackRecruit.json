@@ -88,9 +88,32 @@
                                 "i am looking for candidates with {skillset}",
                                 "{skillset}"
                             ]
+                        },
+                        {
+                            "name": "experience",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "englishlevel",
+                            "type": "englishlevel"
+                        },
+                        {
+                            "name": "jobtitle",
+                            "type": "jobtitles"
                         }
                     ],
                     "samples": [
+                        "find vanhacker with {jobtitle} having {experience} years of experience in {skillset} and english level {englishlevel}",
+                        "get me vanhacker with {jobtitle} having {experience} years of experience in {skillset} and english level {englishlevel} ",
+                        "find vanhacker having {experience} years of experience in {skillset} and english level {englishlevel}",
+                        "candidate with {skillset} and {englishlevel}",
+                        "candidate with {experience}",
+                        "vanhacker with {experience}",
+                        "candidate with {jobtitle}",
+                        "vanhacker with {jobtitle}",
+                        "find vanhacker skilled in {skillset} and {experience} years of experience with {englishlevel} english level",
+                        "find candidate with {englishlevel}",
+                        "find vanhacker with {skillset} and {experience} years experience",
                         "vanhacker with {skillset}",
                         "best match vanhacker with {skillset}",
                         "find best match candidate with {skillset}"
@@ -257,6 +280,236 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "englishlevel",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "None"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Medium"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Advanced"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Native"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "jobtitles",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "CEO"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Full-Stack Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "SYSTEM ANALYST"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Data Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Project Manager"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Project Manager & Scrum Master"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "System Requirements Analyst"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Infrastructure Specialist"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "c plus plus Sofware Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "C++ Sofware Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "java developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Java Core Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Java Core/ EE / Spring Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Lead Software Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Senior Software Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "IT Customer Success Manager"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Database Administrator"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Senior System Analyst"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Digital Marketing Specialist"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Marketeer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Digital Visual Design"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "UI/UX Designer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "UI/UX Designer & Digital Visual Design"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Dot NET Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": ".NET Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Support Analyst"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Software Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Graphic Designer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Full Stack Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "IT Security"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Network Admin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "System Admin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "DevOps"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Full stack Ruby on Rails developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Web Developer Fullstack"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "web developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "programmer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "computer scientist"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "computer programmer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Software Engineer"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -277,6 +530,27 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1382217617602.1546432436665"
                             }
+                        },
+                        {
+                            "name": "experience",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "englishlevel",
+                            "type": "englishlevel",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "jobtitle",
+                            "type": "jobtitles",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
