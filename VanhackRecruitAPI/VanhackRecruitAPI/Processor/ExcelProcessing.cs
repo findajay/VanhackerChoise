@@ -12,44 +12,37 @@ namespace VanhackRecruitAPI.Processor
 {
     public static class ExcelProcessing
     {
-        private static string AvailableCandidateCsvPath = Environment.GetEnvironmentVariable("AvailableCandidatesBlob");// @"";
-        
+        private static string AvailableCandidateCsvPath = Environment.GetEnvironmentVariable("AvailableCandidatesBlob");
+        private static string AvailableJobsCsvPath = Environment.GetEnvironmentVariable("AvailableJobsBlob");
+
         /// <summary>
-        /// Get Excel from blob storage and process
+        /// Get Candidate Excel from blob storage and process
         /// </summary>
         /// <param name="CandidateProfile"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        public static SearchResponse GetExcelFile(CandidateRequestEntity CandidateProfile, ILogger log)
+        public static SearchResponse ProcessCandidatesExcelFile(CandidateRequestEntity CandidateProfile, ILogger log)
         {
             List<string> CandRes = new List<string>();
             string[] requestedSkills = new string[3];
-            if (CandidateProfile.skills.Contains(" "))
-            {
-                requestedSkills = CandidateProfile.skills.Split(" ");
-            }
-            else if (CandidateProfile.skills.Contains(","))
-            {
-                requestedSkills = CandidateProfile.skills.Split(",");
-            }
+            requestedSkills = GetRequestedSkills(requestedSkills, CandidateProfile.skills);
+
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(AvailableCandidateCsvPath);
             HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
 
             try
             {
-                using (CsvReader csv =
-                new CsvReader(new StreamReader(resp.GetResponseStream()), true))
+                using CsvReader csv =
+                new CsvReader(new StreamReader(resp.GetResponseStream()), true);
+                int fieldCount = csv.FieldCount;
+                string[] headers = csv.GetFieldHeaders();
+                while (csv.ReadNextRecord())
                 {
-                    int fieldCount = csv.FieldCount;
-                    string[] headers = csv.GetFieldHeaders();
-                    while (csv.ReadNextRecord())
+                    if ((string.IsNullOrEmpty(CandidateProfile.position) || csv[2].ToLower().Contains(CandidateProfile.position.ToLower())) && (CandidateProfile.experience == 0 || int.Parse(csv[3]) == CandidateProfile.experience) && (CandidateProfile.english == 0 || int.Parse(csv[4]) == Convert.ToInt32(CandidateProfile.english)))
                     {
-                        if (csv[2].ToLower().Contains(CandidateProfile.position.ToLower()) && int.Parse(csv[3]) == CandidateProfile.experience && int.Parse(csv[4]) == Convert.ToInt32(CandidateProfile.english))
+                        if (requestedSkills == null || (requestedSkills != null && CheckForSkills(csv[1], requestedSkills)))
                         {
-                            if (CheckForSkills(csv[1], requestedSkills))
-                            {
-                                CandRes.Add(csv[0]);
-                            }
+                            CandRes.Add(csv[0]);
                         }
                     }
                 }
@@ -62,6 +55,43 @@ namespace VanhackRecruitAPI.Processor
             return new SearchResponse { BestMatched = CandRes };
         }
 
+
+        /// <summary>
+        /// Get jobs Excel from blob storage and process
+        /// </summary>
+        /// <param name="CandidateProfile"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public static SearchResponse ProcessJobsExcelFile(CandidateRequestEntity CandidateProfile, ILogger log)
+        {
+            List<string> JobsRes = new List<string>();
+            string[] requestedSkills = new string[3];
+
+            requestedSkills = GetRequestedSkills(requestedSkills, CandidateProfile.skills);
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(AvailableJobsCsvPath);
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+
+            try
+            {
+                using CsvReader csv =
+                new CsvReader(new StreamReader(resp.GetResponseStream()), true);
+                int fieldCount = csv.FieldCount;
+                string[] headers = csv.GetFieldHeaders();
+                while (csv.ReadNextRecord())
+                {
+                    if ((string.IsNullOrEmpty(CandidateProfile.position) || csv[2].ToLower().Contains(CandidateProfile.position.ToLower())) || (requestedSkills != null && CheckForSkills(csv[3], requestedSkills)))
+                    {
+                        JobsRes.Add(csv[0]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation(ex.Message);
+                return new SearchResponse();
+            }
+            return new SearchResponse { BestMatched = JobsRes };
+        }
 
         /// <summary>
         /// check for all requested skills are matching or not
@@ -82,6 +112,29 @@ namespace VanhackRecruitAPI.Processor
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// To get request skills array from alexa
+        /// </summary>
+        /// <param name="requestedSkills"></param>
+        /// <param name="availableSkills"></param>
+        /// <returns></returns>
+        private static string[] GetRequestedSkills(string[] requestedSkills, string availableSkills)
+        {
+            if (!string.IsNullOrEmpty(availableSkills))
+            {
+                if (availableSkills.Contains(" "))
+                {
+                    requestedSkills = availableSkills.Split(" ");
+                }
+                else if (availableSkills.Contains(","))
+                {
+                    requestedSkills = availableSkills.Split(",");
+                }
+                return requestedSkills;
+            }
+            return null;
         }
 
 

@@ -12,11 +12,11 @@ using VanhackRecruitAPI.Modeling;
 
 namespace VanhackRecruitAPI.FunctionEndpoints
 {
-    public static class GetCandidateWithSkills
+    public static class GetFilteredJobs
     {
-        [FunctionName("GetCandidateWithSkills")]
+        [FunctionName("GetFilteredJobs")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "GetCandidateWithSkills")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "GetFilteredJobs")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
@@ -27,7 +27,7 @@ namespace VanhackRecruitAPI.FunctionEndpoints
             {
                 return new BadRequestObjectResult("Please pass expected input in the request body");
             }
-                var response = ExcelProcessing.ProcessCandidatesExcelFile(requestEntity,log);
+                var response = ExcelProcessing.ProcessJobsExcelFile(requestEntity,log);
 
                 return response != null
                     ? (ActionResult)new OkObjectResult(response)

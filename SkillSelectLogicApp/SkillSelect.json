@@ -1,467 +1,663 @@
 {
-  "definition": {
-    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-    "actions": {
-      "Initialize_EnglishLevel": {
-        "inputs": {
-          "variables": [
-            {
-              "name": "EnglishLevel",
-              "type": "string",
-              "value": "0"
-            }
-          ]
-        },
-        "runAfter": {
-          "Initialize_Experience": [
-            "Succeeded"
-          ]
-        },
-        "type": "InitializeVariable"
-      },
-      "Initialize_Experience": {
-        "inputs": {
-          "variables": [
-            {
-              "name": "Experience",
-              "type": "integer",
-              "value": 0
-            }
-          ]
-        },
-        "runAfter": {
-          "Initialize_Position": [
-            "Succeeded"
-          ]
-        },
-        "type": "InitializeVariable"
-      },
-      "Initialize_Position": {
-        "inputs": {
-          "variables": [
-            {
-              "name": "Position",
-              "type": "string",
-              "value": "Software Engineer"
-            }
-          ]
-        },
-        "runAfter": {
-          "Initialize_Skills": [
-            "Succeeded"
-          ]
-        },
-        "type": "InitializeVariable"
-      },
-      "Initialize_Skills": {
-        "inputs": {
-          "variables": [
-            {
-              "name": "Skills",
-              "type": "string",
-              "value": "python"
-            }
-          ]
-        },
-        "runAfter": {},
-        "type": "InitializeVariable"
-      },
-      "Request_Type": {
-        "cases": {
-          "Intent": {
-            "actions": {
-              "Intent_Type": {
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Initialize_EnglishLevel": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "EnglishLevel",
+                            "type": "string",
+                            "value": "0"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Experience": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Experience": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Experience",
+                            "type": "integer",
+                            "value": 0
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Position": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Position": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Position",
+                            "type": "string",
+                            "value": "Software Engineer"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_Skills": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_Skills": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "Skills",
+                            "type": "string",
+                            "value": "python"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Request_Type": {
                 "cases": {
-                  "Help_intent": {
-                    "actions": {
-                      "HelpResponse": {
-                        "inputs": {
-                          "body": {
-                            "response": {
-                              "outputSpeech": {
-                                "text": " Hi,   if you want to search for best match candidates ,  say find best match candidate with skillname . To check latest job openings ,  say show me top jobs with skillname.",
-                                "type": "PlainText"
-                              },
-                              "shouldEndSession": true
-                            },
-                            "version": "1.0"
-                          },
-                          "headers": {
-                            "content-type": "application/json"
-                          },
-                          "schema": {
-                            "properties": {
-                              "response": {
-                                "properties": {
-                                  "outputSpeech": {
-                                    "properties": {
-                                      "text": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
+                    "Intent": {
+                        "actions": {
+                            "Intent_Type": {
+                                "cases": {
+                                    "Help_intent": {
+                                        "actions": {
+                                            "HelpResponse": {
+                                                "inputs": {
+                                                    "body": {
+                                                        "response": {
+                                                            "directives": [
+                                                                {
+                                                                    "template": {
+                                                                        "backButton": "VISIBLE",
+                                                                        "backgroundImage": {
+                                                                            "contentDescription": "Textured grey background",
+                                                                            "sources": [
+                                                                                {
+                                                                                    "url": "https://image.winudf.com/v2/image/dmFuaGFjay5tb2JpbGVfc2NyZWVuc2hvdHNfMF81YWE4NGIyNg/screen-0.jpg?fakeurl=1&type=.jpg"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "image": {
+                                                                            "contentDescription": "vanhack",
+                                                                            "sources": [
+                                                                                {
+                                                                                    "url": "https://media.licdn.com/dms/image/C4E0BAQE0ba0rPQFPDA/company-logo_200_200/0?e=2159024400&v=beta&t=GI2SC266RJYbptfLsOdsE8Owhz_atnAPRRYXIXpkLe8"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "textContent": {
+                                                                            "primaryText": {
+                                                                                "text": " Hi, If you want to search for best match candidates , say I am looking for a {jobtitle} with expertise in {skillset} and {skillset} .To check latest job openings , say find avaiable jobs in {skill} or find avaiable jobs for {jobtitle}.",
+                                                                                "type": "RichText"
+                                                                            }
+                                                                        },
+                                                                        "title": "Vanhack",
+                                                                        "token": "A2079",
+                                                                        "type": "BodyTemplate2"
+                                                                    },
+                                                                    "type": "Display.RenderTemplate"
+                                                                }
+                                                            ],
+                                                            "outputSpeech": {
+                                                                "text": " Hi, If you want to search for best match candidates , say I am looking for a {jobtitle} with expertise in {skillset} and {skillset} .To check latest job openings , say find avaiable jobs in {skill} or find avaiable jobs for {jobtitle}.",
+                                                                "type": "PlainText"
+                                                            },
+                                                            "shouldEndSession": true
+                                                        },
+                                                        "version": "1.0"
+                                                    },
+                                                    "headers": {
+                                                        "content-type": "application/json"
+                                                    },
+                                                    "schema": {
+                                                        "properties": {
+                                                            "response": {
+                                                                "properties": {
+                                                                    "outputSpeech": {
+                                                                        "properties": {
+                                                                            "text": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "type": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "shouldEndSession": {
+                                                                        "type": "boolean"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "version": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "statusCode": 200
+                                                },
+                                                "kind": "Http",
+                                                "runAfter": {},
+                                                "type": "Response"
+                                            }
+                                        },
+                                        "case": "AMAZON.HelpIntent"
                                     },
-                                    "type": "object"
-                                  },
-                                  "shouldEndSession": {
-                                    "type": "boolean"
-                                  }
-                                },
-                                "type": "object"
-                              },
-                              "version": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "statusCode": 200
-                        },
-                        "kind": "Http",
-                        "runAfter": {},
-                        "type": "Response"
-                      }
-                    },
-                    "case": "AMAZON.HelpIntent"
-                  },
-                  "TopJobs": {
-                    "actions": {},
-                    "case": "topjobs"
-                  },
-                  "findCandidate": {
-                    "actions": {
-                      "GetMatchedCandidate": {
-                        "inputs": {
-                          "body": {
-                            "english": 2,
-                            "experience": 2,
-                            "position": "Software Engineer",
-                            "skills": [
-                              "python",
-                              "html5",
-                              "css3"
-                            ]
-                          },
-                          "headers": {
-                            "Content-Type": "application/json"
-                          },
-                          "method": "POST",
-                          "uri": "https://vanhackrecruitapi20191120070106.azurewebsites.net/api/GetCandidateWithSkills"
-                        },
-                        "runAfter": {
-                          "Set_Position": [
-                            "Succeeded"
-                          ]
-                        },
-                        "type": "Http"
-                      },
-                      "Response": {
-                        "inputs": {
-                          "body": {
-                            "response": {
-                              "outputSpeech": {
-                                "text": " Best matched candidate for provided skills is @{body('GetMatchedCandidate')['bestMatched']}  ",
-                                "type": "PlainText"
-                              },
-                              "shouldEndSession": false
-                            },
-                            "version": "1.0"
-                          },
-                          "headers": {
-                            "content-type": "application/json"
-                          },
-                          "schema": {
-                            "properties": {
-                              "response": {
-                                "properties": {
-                                  "outputSpeech": {
-                                    "properties": {
-                                      "text": {
-                                        "type": "string"
-                                      },
-                                      "type": {
-                                        "type": "string"
-                                      }
+                                    "TopJobs": {
+                                        "actions": {
+                                            "GetFilteredJobs": {
+                                                "inputs": {
+                                                    "body": {
+                                                        "position": "@variables('Position')",
+                                                        "skills": "@variables('Skills')"
+                                                    },
+                                                    "headers": {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "https://vanhackrecruitapi20191120070106.azurewebsites.net/api/GetFilteredJobs"
+                                                },
+                                                "runAfter": {
+                                                    "Set_job_Skills": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Http"
+                                            },
+                                            "JobsResponse": {
+                                                "inputs": {
+                                                    "body": {
+                                                        "response": {
+                                                            "directives": [
+                                                                {
+                                                                    "template": {
+                                                                        "backButton": "VISIBLE",
+                                                                        "backgroundImage": {
+                                                                            "contentDescription": "Textured grey background",
+                                                                            "sources": [
+                                                                                {
+                                                                                    "url": "https://image.winudf.com/v2/image/dmFuaGFjay5tb2JpbGVfc2NyZWVuc2hvdHNfMF81YWE4NGIyNg/screen-0.jpg?fakeurl=1&type=.jpg"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "image": {
+                                                                            "contentDescription": "vanhack",
+                                                                            "sources": [
+                                                                                {
+                                                                                    "url": "https://media.licdn.com/dms/image/C4E0BAQE0ba0rPQFPDA/company-logo_200_200/0?e=2159024400&v=beta&t=GI2SC266RJYbptfLsOdsE8Owhz_atnAPRRYXIXpkLe8"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "textContent": {
+                                                                            "primaryText": {
+                                                                                "text": "We have some jobs matching your search. Job ids are  @{body('GetFilteredJobs')['bestMatched']}",
+                                                                                "type": "RichText"
+                                                                            }
+                                                                        },
+                                                                        "title": "Vanhack",
+                                                                        "token": "A2079",
+                                                                        "type": "BodyTemplate2"
+                                                                    },
+                                                                    "type": "Display.RenderTemplate"
+                                                                }
+                                                            ],
+                                                            "outputSpeech": {
+                                                                "text": " We have some jobs matching your search. Job ids are  @{body('GetFilteredJobs')['bestMatched']}  ",
+                                                                "type": "PlainText"
+                                                            },
+                                                            "shouldEndSession": false
+                                                        },
+                                                        "version": "1.0"
+                                                    },
+                                                    "headers": {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    "statusCode": 200
+                                                },
+                                                "kind": "http",
+                                                "runAfter": {
+                                                    "GetFilteredJobs": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Response"
+                                            },
+                                            "Set_job_Skills": {
+                                                "inputs": {
+                                                    "name": "Skills",
+                                                    "value": "@{body('ParseIntent')['slots']['skillset']?['value']}"
+                                                },
+                                                "runAfter": {
+                                                    "Set_job_position": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "SetVariable"
+                                            },
+                                            "Set_job_position": {
+                                                "inputs": {
+                                                    "name": "Position",
+                                                    "value": "@{body('ParseIntent')['slots']['jobtitles']?['value']}"
+                                                },
+                                                "runAfter": {},
+                                                "type": "SetVariable"
+                                            }
+                                        },
+                                        "case": "findjobs"
                                     },
-                                    "type": "object"
-                                  },
-                                  "shouldEndSession": {
-                                    "type": "boolean"
-                                  }
+                                    "findCandidate": {
+                                        "actions": {
+                                            "CandidateResponse": {
+                                                "inputs": {
+                                                    "body": "\"directives\": [\n      {\n        \"template\": {\n          \"backButton\": \"VISIBLE\",\n          \"backgroundImage\": {\n            \"contentDescription\": \"Textured grey background\",\n            \"sources\": [\n              {\n                \"url\": \"https://image.winudf.com/v2/image/dmFuaGFjay5tb2JpbGVfc2NyZWVuc2hvdHNfMF81YWE4NGIyNg/screen-0.jpg?fakeurl=1&type=.jpg\"\n              }\n            ]\n          },\n          \"image\": {\n            \"contentDescription\": \"vanhack\",\n            \"sources\": [\n              {\n                \"url\": \"https://media.licdn.com/dms/image/C4E0BAQE0ba0rPQFPDA/company-logo_200_200/0?e=2159024400&v=beta&t=GI2SC266RJYbptfLsOdsE8Owhz_atnAPRRYXIXpkLe8\"\n              }\n            ]\n          },\n          \"textContent\": {\n            \"primaryText\": {\n              \"text\": \"Best matched candidate for provided skills is @{body('GetMatchedCandidate')['bestMatched']}\",\n              \"type\": \"RichText\"\n            }\n          },\n          \"title\": \"Vanhack\",\n          \"token\": \"A2079\",\n          \"type\": \"BodyTemplate2\"\n        },\n        \"type\": \"Display.RenderTemplate\"\n      }\n    ],",
+                                                    "headers": {
+                                                        "content-type": "application/json"
+                                                    },
+                                                    "schema": {
+                                                        "properties": {
+                                                            "response": {
+                                                                "properties": {
+                                                                    "outputSpeech": {
+                                                                        "properties": {
+                                                                            "text": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "type": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "shouldEndSession": {
+                                                                        "type": "boolean"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "version": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "statusCode": 200
+                                                },
+                                                "kind": "http",
+                                                "runAfter": {
+                                                    "GetMatchedCandidate": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Response"
+                                            },
+                                            "GetMatchedCandidate": {
+                                                "inputs": {
+                                                    "body": {
+                                                        "english": 2,
+                                                        "experience": 2,
+                                                        "position": "@variables('Position')",
+                                                        "skills": "@variables('Skills')"
+                                                    },
+                                                    "headers": {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    "method": "POST",
+                                                    "uri": "https://vanhackrecruitapi20191120070106.azurewebsites.net/api/GetCandidateWithSkills"
+                                                },
+                                                "runAfter": {
+                                                    "Set_skill": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "Http"
+                                            },
+                                            "Set_Position": {
+                                                "inputs": {
+                                                    "name": "Position",
+                                                    "value": "@{body('ParseIntent')['slots']['jobtitle']?['value']}"
+                                                },
+                                                "runAfter": {},
+                                                "type": "SetVariable"
+                                            },
+                                            "Set_skill": {
+                                                "inputs": {
+                                                    "name": "Skills",
+                                                    "value": "@{body('ParseIntent')['slots']['skillset']?['value']}"
+                                                },
+                                                "runAfter": {
+                                                    "Set_Position": [
+                                                        "Succeeded"
+                                                    ]
+                                                },
+                                                "type": "SetVariable"
+                                            }
+                                        },
+                                        "case": "findcandidate"
+                                    }
                                 },
-                                "type": "object"
-                              },
-                              "version": {
-                                "type": "string"
-                              }
+                                "default": {
+                                    "actions": {}
+                                },
+                                "expression": "@body('ParseIntent')?['name']",
+                                "runAfter": {
+                                    "ParseIntent": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "Switch"
                             },
-                            "type": "object"
-                          },
-                          "statusCode": 200
+                            "ParseIntent": {
+                                "inputs": {
+                                    "content": "@triggerBody()?['request']?['intent']",
+                                    "schema": {
+                                        "properties": {
+                                            "confirmationStatus": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "slots": {
+                                                "properties": {
+                                                    "CONDECO_LOCATIONS": {
+                                                        "properties": {
+                                                            "confirmationStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "CONDECO_ROOMS": {
+                                                        "properties": {
+                                                            "confirmationStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "Hours": {
+                                                        "properties": {
+                                                            "confirmationStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "minutes": {
+                                                        "properties": {
+                                                            "confirmationStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "time": {
+                                                        "properties": {
+                                                            "confirmationStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "runAfter": {},
+                                "type": "ParseJson"
+                            }
                         },
-                        "kind": "Http",
-                        "runAfter": {
-                          "GetMatchedCandidate": [
-                            "Succeeded"
-                          ]
-                        },
-                        "type": "Response"
-                      },
-                      "Set_Position": {
-                        "inputs": {
-                          "name": "Position",
-                          "value": "\"\""
-                        },
-                        "runAfter": {},
-                        "type": "SetVariable"
-                      }
+                        "case": "IntentRequest"
                     },
-                    "case": "findcandidate"
-                  }
+                    "Launch": {
+                        "actions": {
+                            "LaunchResponse": {
+                                "inputs": {
+                                    "body": {
+                                        "response": {
+                                            "directives": [
+                                                {
+                                                    "template": {
+                                                        "backButton": "VISIBLE",
+                                                        "backgroundImage": {
+                                                            "contentDescription": "Textured grey background",
+                                                            "sources": [
+                                                                {
+                                                                    "url": "https://image.winudf.com/v2/image/dmFuaGFjay5tb2JpbGVfc2NyZWVuc2hvdHNfMF81YWE4NGIyNg/screen-0.jpg?fakeurl=1&type=.jpg"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "image": {
+                                                            "contentDescription": "vanhack",
+                                                            "sources": [
+                                                                {
+                                                                    "url": "https://media.licdn.com/dms/image/C4E0BAQE0ba0rPQFPDA/company-logo_200_200/0?e=2159024400&v=beta&t=GI2SC266RJYbptfLsOdsE8Owhz_atnAPRRYXIXpkLe8"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "textContent": {
+                                                            "primaryText": {
+                                                                "text": "   Welcome to Vanhack, I can help you find best match candidates for the job and top jobs available for a skillset. If you don't know how to proceed you can say help me",
+                                                                "type": "RichText"
+                                                            }
+                                                        },
+                                                        "title": "Vanhack",
+                                                        "token": "A2079",
+                                                        "type": "BodyTemplate2"
+                                                    },
+                                                    "type": "Display.RenderTemplate"
+                                                }
+                                            ],
+                                            "outputSpeech": {
+                                                "ssml": "<speak> Welcome to Vanhack, I can help you find best match candidates for the job and top jobs available for a skillset. If you don't know how to proceed you can say help me.  <amazon:effect name=\"whispered\">And don't forget We hack together.</amazon:effect></speak>",
+                                                "type": "SSML"
+                                            },
+                                            "shouldEndSession": false
+                                        },
+                                        "version": "1.0"
+                                    },
+                                    "headers": {
+                                        "Content-Type": "application/json"
+                                    },
+                                    "schema": {
+                                        "properties": {
+                                            "response": {
+                                                "properties": {
+                                                    "outputSpeech": {
+                                                        "properties": {
+                                                            "text": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "shouldEndSession": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "version": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "statusCode": 200
+                                },
+                                "kind": "http",
+                                "runAfter": {},
+                                "type": "Response"
+                            }
+                        },
+                        "case": "LaunchRequest"
+                    }
                 },
                 "default": {
-                  "actions": {}
+                    "actions": {
+                        "DefaultResponse": {
+                            "inputs": {
+                                "body": {
+                                    "response": {
+                                        "directives": [
+                                            {
+                                                "template": {
+                                                    "backButton": "VISIBLE",
+                                                    "backgroundImage": {
+                                                        "contentDescription": "Textured grey background",
+                                                        "sources": [
+                                                            {
+                                                                "url": "https://image.winudf.com/v2/image/dmFuaGFjay5tb2JpbGVfc2NyZWVuc2hvdHNfMF81YWE4NGIyNg/screen-0.jpg?fakeurl=1&type=.jpg"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "image": {
+                                                        "contentDescription": "vanhack",
+                                                        "sources": [
+                                                            {
+                                                                "url": "https://media.licdn.com/dms/image/C4E0BAQE0ba0rPQFPDA/company-logo_200_200/0?e=2159024400&v=beta&t=GI2SC266RJYbptfLsOdsE8Owhz_atnAPRRYXIXpkLe8"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "textContent": {
+                                                        "primaryText": {
+                                                            "text": " Your session has been ended! You should start again by saying let's search ",
+                                                            "type": "RichText"
+                                                        }
+                                                    },
+                                                    "title": "Vanhack",
+                                                    "token": "A2079",
+                                                    "type": "BodyTemplate2"
+                                                },
+                                                "type": "Display.RenderTemplate"
+                                            }
+                                        ],
+                                        "outputSpeech": {
+                                            "text": " Your session has been ended! You should start again by saying let's search ",
+                                            "type": "PlainText"
+                                        },
+                                        "shouldEndSession": true
+                                    },
+                                    "version": "1.0"
+                                },
+                                "headers": {
+                                    "content-type": "application/json"
+                                },
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "properties": {
+                                                "outputSpeech": {
+                                                    "properties": {
+                                                        "text": {
+                                                            "type": "string"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "shouldEndSession": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "version": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "statusCode": 200
+                            },
+                            "kind": "http",
+                            "runAfter": {},
+                            "type": "Response"
+                        }
+                    }
                 },
-                "expression": "@body('ParseIntent')?['name']",
+                "expression": "@triggerBody()?['request']['type']",
                 "runAfter": {
-                  "ParseIntent": [
-                    "Succeeded"
-                  ]
+                    "Initialize_EnglishLevel": [
+                        "Succeeded"
+                    ]
                 },
                 "type": "Switch"
-              },
-              "ParseIntent": {
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {},
+        "triggers": {
+            "manual": {
                 "inputs": {
-                  "content": "@triggerBody()?['request']?['intent']",
-                  "schema": {
-                    "properties": {
-                      "confirmationStatus": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "slots": {
+                    "schema": {
                         "properties": {
-                          "CONDECO_LOCATIONS": {
-                            "properties": {
-                              "confirmationStatus": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
+                            "request": {
+                                "properties": {
+                                    "intent": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
                             },
-                            "type": "object"
-                          },
-                          "CONDECO_ROOMS": {
-                            "properties": {
-                              "confirmationStatus": {
+                            "version": {
                                 "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "Hours": {
-                            "properties": {
-                              "confirmationStatus": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "minutes": {
-                            "properties": {
-                              "confirmationStatus": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "time": {
-                            "properties": {
-                              "confirmationStatus": {
-                                "type": "string"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          }
+                            }
                         },
                         "type": "object"
-                      }
-                    },
-                    "type": "object"
-                  }
-                },
-                "runAfter": {},
-                "type": "ParseJson"
-              }
-            },
-            "case": "IntentRequest"
-          },
-          "Launch": {
-            "actions": {
-              "Response_3": {
-                "inputs": {
-                  "body": {
-                    "response": {
-                      "outputSpeech": {
-                        "text": " Welcome to Vanhack, I can help you find best match candidates for the job and top jobs available for a skillset. If you don't know how to proceed you can say, help me",
-                        "type": "PlainText"
-                      },
-                      "shouldEndSession": false
-                    },
-                    "version": "1.0"
-                  },
-                  "headers": {
-                    "Content-Type": "application/json"
-                  },
-                  "schema": {
-                    "properties": {
-                      "response": {
-                        "properties": {
-                          "outputSpeech": {
-                            "properties": {
-                              "text": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            },
-                            "type": "object"
-                          },
-                          "shouldEndSession": {
-                            "type": "boolean"
-                          }
-                        },
-                        "type": "object"
-                      },
-                      "version": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "statusCode": 200
+                    }
                 },
                 "kind": "Http",
-                "runAfter": {},
-                "type": "Response"
-              }
-            },
-            "case": "LaunchRequest"
-          }
-        },
-        "default": {
-          "actions": {
-            "Response_5": {
-              "inputs": {
-                "body": {
-                  "response": {
-                    "outputSpeech": {
-                      "text": " Bye bye ",
-                      "type": "PlainText"
-                    },
-                    "shouldEndSession": true
-                  },
-                  "version": "1.0"
-                },
-                "headers": {
-                  "content-type": "application/json"
-                },
-                "schema": {
-                  "properties": {
-                    "response": {
-                      "properties": {
-                        "outputSpeech": {
-                          "properties": {
-                            "text": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "object"
-                        },
-                        "shouldEndSession": {
-                          "type": "boolean"
-                        }
-                      },
-                      "type": "object"
-                    },
-                    "version": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                },
-                "statusCode": 200
-              },
-              "kind": "Http",
-              "runAfter": {},
-              "type": "Response"
+                "type": "Request"
             }
-          }
-        },
-        "expression": "@triggerBody()?['request']['type']",
-        "runAfter": {
-          "Initialize_EnglishLevel": [
-            "Succeeded"
-          ]
-        },
-        "type": "Switch"
-      }
+        }
     },
-    "contentVersion": "1.0.0.0",
-    "outputs": {},
-    "parameters": {},
-    "triggers": {
-      "manual": {
-        "inputs": {
-          "schema": {
-            "properties": {
-              "request": {
-                "properties": {
-                  "intent": {
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "type": {
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "version": {
-                "type": "string"
-              }
-            },
-            "type": "object"
-          }
-        },
-        "kind": "Http",
-        "type": "Request"
-      }
-    }
-  },
-  "parameters": {}
+    "parameters": {}
 }

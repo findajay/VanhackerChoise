@@ -6,6 +6,6 @@ namespace VanhackRecruitAPI.Modeling
 {
     public class SearchResponse
     {
-       public List<string> BestMatched { get; set; }
+       public object BestMatched { get; set; }
     }
 }

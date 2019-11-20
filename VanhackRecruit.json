@@ -1,11 +1,13 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "hello vanhack",
+            "invocationName": "vanhack engine",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
-                    "samples": []
+                    "samples": [
+                        "oops sorry we are having some difficulties getting your input"
+                    ]
                 },
                 {
                     "name": "AMAZON.CancelIntent",
@@ -22,7 +24,9 @@
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
+                    "samples": [
+                        "stop"
+                    ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
@@ -81,17 +85,11 @@
                     "slots": [
                         {
                             "name": "skillset",
-                            "type": "skillset",
-                            "samples": [
-                                "vanhacker with {skillset}",
-                                "show me vanhackers with {skillset}",
-                                "i am looking for candidates with {skillset}",
-                                "{skillset}"
-                            ]
+                            "type": "skillset"
                         },
                         {
-                            "name": "experience",
-                            "type": "AMAZON.NUMBER"
+                            "name": "experiencelevel",
+                            "type": "experiencelevel"
                         },
                         {
                             "name": "englishlevel",
@@ -103,89 +101,38 @@
                         }
                     ],
                     "samples": [
-                        "find vanhacker with {jobtitle} having {experience} years of experience in {skillset} and english level {englishlevel}",
-                        "get me vanhacker with {jobtitle} having {experience} years of experience in {skillset} and english level {englishlevel} ",
-                        "find vanhacker having {experience} years of experience in {skillset} and english level {englishlevel}",
-                        "candidate with {skillset} and {englishlevel}",
-                        "candidate with {experience}",
-                        "vanhacker with {experience}",
-                        "candidate with {jobtitle}",
-                        "vanhacker with {jobtitle}",
-                        "find vanhacker skilled in {skillset} and {experience} years of experience with {englishlevel} english level",
-                        "find candidate with {englishlevel}",
-                        "find vanhacker with {skillset} and {experience} years experience",
-                        "vanhacker with {skillset}",
-                        "best match vanhacker with {skillset}",
-                        "find best match candidate with {skillset}"
+                        "find me  a {jobtitle} with expertise in {skillset} and {skillset}",
+                        "I am looking for  a {jobtitle} with expertise in {skillset} and {skillset}",
+                        "I am looking for  a {jobtitle} with expertise in {skillset} ",
+                        "I am looking for  a  {experiencelevel}  {jobtitle} with expertise in {skillset} ",
+                        "I am looking for  a  {jobtitle} with expertise in {skillset} and {englishlevel}",
+                        "find me a {jobtitle} with {experiencelevel} years of experience",
+                        "find me best vanhacker with {skillset}"
+                    ]
+                },
+                {
+                    "name": "findjobs",
+                    "slots": [
+                        {
+                            "name": "skillset",
+                            "type": "skillset"
+                        },
+                        {
+                            "name": "jobtitles",
+                            "type": "jobtitles"
+                        }
+                    ],
+                    "samples": [
+                        "find avaiable jobs in {skillset}",
+                        "find avaiable jobs for {jobtitles}",
+                        "what are the top jobs available in {skillset}",
+                        "top available jobs on vanhack",
+                        "display top jobs",
+                        "show me top jobs available for {skillset}"
                     ]
                 }
             ],
             "types": [
-                {
-                    "name": "AMAZON.CreativeWorkType",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "kubernetes"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "devops"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "microservice"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "react"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "angular"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "ruby on rails"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "python"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "javascript"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "Java"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": ".Net"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "php"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "C#"
-                            }
-                        }
-                    ]
-                },
                 {
                     "name": "skillset",
                     "values": [
@@ -285,21 +232,25 @@
                     "name": "englishlevel",
                     "values": [
                         {
+                            "id": "0",
                             "name": {
                                 "value": "None"
                             }
                         },
                         {
+                            "id": "1",
                             "name": {
                                 "value": "Medium"
                             }
                         },
                         {
+                            "id": "2",
                             "name": {
                                 "value": "Advanced"
                             }
                         },
                         {
+                            "id": "3",
                             "name": {
                                 "value": "Native"
                             }
@@ -508,6 +459,86 @@
                             "name": {
                                 "value": "Software Engineer"
                             }
+                        },
+                        {
+                            "name": {
+                                "value": "Backend Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Backend NodeJS Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Cloud DevOps Specialist"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Game Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mobile Developer (React Native)"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Senior Front End Engineer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Senior Mobile App Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Software Developer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Sr Backend Developer (Python)"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Sr Backend Engineer (Java)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "experiencelevel",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "manager"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "expert"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lead"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "senior"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "junior"
+                            }
                         }
                     ]
                 }
@@ -517,6 +548,7 @@
             "intents": [
                 {
                     "name": "findcandidate",
+                    "delegationStrategy": "SKILL_RESPONSE",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent.864085428186"
@@ -526,14 +558,12 @@
                             "name": "skillset",
                             "type": "skillset",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1382217617602.1546432436665"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         },
                         {
-                            "name": "experience",
-                            "type": "AMAZON.NUMBER",
+                            "name": "experiencelevel",
+                            "type": "experiencelevel",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -555,7 +585,7 @@
                     ]
                 }
             ],
-            "delegationStrategy": "ALWAYS"
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {
@@ -573,6 +603,42 @@
                     {
                         "type": "PlainText",
                         "value": "which skill you searching in candidates"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1213167060398.289419633034",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "please tell me experience years for filter"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1213167060398.1175545598384",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "if you want to filter search by english level say which {englishlevel}"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1213167060398.334473501943",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "What job title you are looking for specifically"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1047211252255.1569803294014",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "How many years of experience ?"
                     }
                 ]
             }
