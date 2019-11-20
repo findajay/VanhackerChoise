@@ -6,7 +6,7 @@ namespace VanhackRecruitAPI.Modeling
 {
     public class CandidateRequestEntity
     {
-        public List<string> skills { get; set; }
+        public string skills { get; set; }
         public string position { get; set; }
         public int experience { get; set; }
         public EnglishProficiency english { get; set; }

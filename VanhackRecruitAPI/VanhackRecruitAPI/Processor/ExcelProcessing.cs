@@ -13,10 +13,25 @@ namespace VanhackRecruitAPI.Processor
     public static class ExcelProcessing
     {
         private static string AvailableCandidateCsvPath = Environment.GetEnvironmentVariable("AvailableCandidatesBlob");// @"";
-        public static SearchResponse getExcelFile(CandidateRequestEntity CandidateProfile, ILogger log)
+        
+        /// <summary>
+        /// Get Excel from blob storage and process
+        /// </summary>
+        /// <param name="CandidateProfile"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
+        public static SearchResponse GetExcelFile(CandidateRequestEntity CandidateProfile, ILogger log)
         {
             List<string> CandRes = new List<string>();
-
+            string[] requestedSkills = new string[3];
+            if (CandidateProfile.skills.Contains(" "))
+            {
+                requestedSkills = CandidateProfile.skills.Split(" ");
+            }
+            else if (CandidateProfile.skills.Contains(","))
+            {
+                requestedSkills = CandidateProfile.skills.Split(",");
+            }
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(AvailableCandidateCsvPath);
             HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
 
@@ -29,13 +44,12 @@ namespace VanhackRecruitAPI.Processor
                     string[] headers = csv.GetFieldHeaders();
                     while (csv.ReadNextRecord())
                     {
-                        if (csv[1].Contains(CandidateProfile.skills[0]) && csv[1].Contains(CandidateProfile.skills?[1]) && csv[1].Contains(CandidateProfile.skills?[2]))
+                        if (csv[2].ToLower().Contains(CandidateProfile.position.ToLower()) && int.Parse(csv[3]) == CandidateProfile.experience && int.Parse(csv[4]) == Convert.ToInt32(CandidateProfile.english))
                         {
-                            if (csv[2].Contains(CandidateProfile.position) && int.Parse(csv[3]) == CandidateProfile.experience && int.Parse(csv[4]) == Convert.ToInt32(CandidateProfile.english))
+                            if (CheckForSkills(csv[1], requestedSkills))
                             {
                                 CandRes.Add(csv[0]);
                             }
-
                         }
                     }
                 }
@@ -47,5 +61,29 @@ namespace VanhackRecruitAPI.Processor
             }
             return new SearchResponse { BestMatched = CandRes };
         }
+
+
+        /// <summary>
+        /// check for all requested skills are matching or not
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="skillsRequested"></param>
+        /// <returns></returns>
+        private static bool CheckForSkills(string skillRow, string[] skillsRequested)
+        {
+            foreach (string s in skillsRequested)
+            {
+                if (!string.IsNullOrEmpty(s))
+                {
+                    if (!skillRow.ToLower().Contains(Convert.ToString(s).Trim().ToLower()))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
     }
 }

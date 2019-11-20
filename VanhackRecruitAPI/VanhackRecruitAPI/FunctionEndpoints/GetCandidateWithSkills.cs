@@ -27,7 +27,7 @@ namespace VanhackRecruitAPI.FunctionEndpoints
             {
                 return new BadRequestObjectResult("Please pass expected input in the request body");
             }
-                var response = ExcelProcessing.getExcelFile(requestEntity,log);
+                var response = ExcelProcessing.GetExcelFile(requestEntity,log);
 
                 return response != null
                     ? (ActionResult)new OkObjectResult(response)
