@@ -52,3 +52,9 @@ Now Alexa can welcome you to the Engine but would not perform further action bec
  14. Now we are ready to go for search.
  15. Start it using invocation speech and follow along.
  
+## Development Tools used while developing 
+1. Visual Studio 2019 
+2. JIRA for canban board and stories 
+3. Visual Studio code 
+4. Azure portal 
+5. Alexa Skill Console
