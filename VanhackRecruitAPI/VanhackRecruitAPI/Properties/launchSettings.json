@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "VanhackRecruitAPI": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AvailableCandidatesBlob": "https://skillselectstore.blob.core.windows.net/skillselectcontainer/AvailableCandidates.csv",
+        "AvailableJobsBlob": "https://skillselectstore.blob.core.windows.net/skillselectcontainer/JobsToPredict.csv"
+      }
+    }
+  }
+}
