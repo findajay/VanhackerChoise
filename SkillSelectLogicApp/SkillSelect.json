@@ -1,0 +1,467 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Initialize_EnglishLevel": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "EnglishLevel",
+              "type": "string",
+              "value": "0"
+            }
+          ]
+        },
+        "runAfter": {
+          "Initialize_Experience": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Initialize_Experience": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "Experience",
+              "type": "integer",
+              "value": 0
+            }
+          ]
+        },
+        "runAfter": {
+          "Initialize_Position": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Initialize_Position": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "Position",
+              "type": "string",
+              "value": "Software Engineer"
+            }
+          ]
+        },
+        "runAfter": {
+          "Initialize_Skills": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Initialize_Skills": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "Skills",
+              "type": "string",
+              "value": "python"
+            }
+          ]
+        },
+        "runAfter": {},
+        "type": "InitializeVariable"
+      },
+      "Request_Type": {
+        "cases": {
+          "Intent": {
+            "actions": {
+              "Intent_Type": {
+                "cases": {
+                  "Help_intent": {
+                    "actions": {
+                      "HelpResponse": {
+                        "inputs": {
+                          "body": {
+                            "response": {
+                              "outputSpeech": {
+                                "text": " Hi,   if you want to search for best match candidates ,  say find best match candidate with skillname . To check latest job openings ,  say show me top jobs with skillname.",
+                                "type": "PlainText"
+                              },
+                              "shouldEndSession": true
+                            },
+                            "version": "1.0"
+                          },
+                          "headers": {
+                            "content-type": "application/json"
+                          },
+                          "schema": {
+                            "properties": {
+                              "response": {
+                                "properties": {
+                                  "outputSpeech": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      },
+                                      "type": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "shouldEndSession": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "version": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "statusCode": 200
+                        },
+                        "kind": "Http",
+                        "runAfter": {},
+                        "type": "Response"
+                      }
+                    },
+                    "case": "AMAZON.HelpIntent"
+                  },
+                  "TopJobs": {
+                    "actions": {},
+                    "case": "topjobs"
+                  },
+                  "findCandidate": {
+                    "actions": {
+                      "GetMatchedCandidate": {
+                        "inputs": {
+                          "body": {
+                            "english": 2,
+                            "experience": 2,
+                            "position": "Software Engineer",
+                            "skills": [
+                              "python",
+                              "html5",
+                              "css3"
+                            ]
+                          },
+                          "headers": {
+                            "Content-Type": "application/json"
+                          },
+                          "method": "POST",
+                          "uri": "https://vanhackrecruitapi20191120070106.azurewebsites.net/api/GetCandidateWithSkills"
+                        },
+                        "runAfter": {
+                          "Set_Position": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "Http"
+                      },
+                      "Response": {
+                        "inputs": {
+                          "body": {
+                            "response": {
+                              "outputSpeech": {
+                                "text": " Best matched candidate for provided skills is @{body('GetMatchedCandidate')['bestMatched']}  ",
+                                "type": "PlainText"
+                              },
+                              "shouldEndSession": false
+                            },
+                            "version": "1.0"
+                          },
+                          "headers": {
+                            "content-type": "application/json"
+                          },
+                          "schema": {
+                            "properties": {
+                              "response": {
+                                "properties": {
+                                  "outputSpeech": {
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      },
+                                      "type": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "shouldEndSession": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "version": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "statusCode": 200
+                        },
+                        "kind": "Http",
+                        "runAfter": {
+                          "GetMatchedCandidate": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "Response"
+                      },
+                      "Set_Position": {
+                        "inputs": {
+                          "name": "Position",
+                          "value": "\"\""
+                        },
+                        "runAfter": {},
+                        "type": "SetVariable"
+                      }
+                    },
+                    "case": "findcandidate"
+                  }
+                },
+                "default": {
+                  "actions": {}
+                },
+                "expression": "@body('ParseIntent')?['name']",
+                "runAfter": {
+                  "ParseIntent": [
+                    "Succeeded"
+                  ]
+                },
+                "type": "Switch"
+              },
+              "ParseIntent": {
+                "inputs": {
+                  "content": "@triggerBody()?['request']?['intent']",
+                  "schema": {
+                    "properties": {
+                      "confirmationStatus": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "slots": {
+                        "properties": {
+                          "CONDECO_LOCATIONS": {
+                            "properties": {
+                              "confirmationStatus": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "CONDECO_ROOMS": {
+                            "properties": {
+                              "confirmationStatus": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "Hours": {
+                            "properties": {
+                              "confirmationStatus": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "minutes": {
+                            "properties": {
+                              "confirmationStatus": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "time": {
+                            "properties": {
+                              "confirmationStatus": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "runAfter": {},
+                "type": "ParseJson"
+              }
+            },
+            "case": "IntentRequest"
+          },
+          "Launch": {
+            "actions": {
+              "Response_3": {
+                "inputs": {
+                  "body": {
+                    "response": {
+                      "outputSpeech": {
+                        "text": " Welcome to Vanhack, I can help you find best match candidates for the job and top jobs available for a skillset. If you don't know how to proceed you can say, help me",
+                        "type": "PlainText"
+                      },
+                      "shouldEndSession": false
+                    },
+                    "version": "1.0"
+                  },
+                  "headers": {
+                    "Content-Type": "application/json"
+                  },
+                  "schema": {
+                    "properties": {
+                      "response": {
+                        "properties": {
+                          "outputSpeech": {
+                            "properties": {
+                              "text": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "shouldEndSession": {
+                            "type": "boolean"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "version": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "statusCode": 200
+                },
+                "kind": "Http",
+                "runAfter": {},
+                "type": "Response"
+              }
+            },
+            "case": "LaunchRequest"
+          }
+        },
+        "default": {
+          "actions": {
+            "Response_5": {
+              "inputs": {
+                "body": {
+                  "response": {
+                    "outputSpeech": {
+                      "text": " Bye bye ",
+                      "type": "PlainText"
+                    },
+                    "shouldEndSession": true
+                  },
+                  "version": "1.0"
+                },
+                "headers": {
+                  "content-type": "application/json"
+                },
+                "schema": {
+                  "properties": {
+                    "response": {
+                      "properties": {
+                        "outputSpeech": {
+                          "properties": {
+                            "text": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "shouldEndSession": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "version": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "statusCode": 200
+              },
+              "kind": "Http",
+              "runAfter": {},
+              "type": "Response"
+            }
+          }
+        },
+        "expression": "@triggerBody()?['request']['type']",
+        "runAfter": {
+          "Initialize_EnglishLevel": [
+            "Succeeded"
+          ]
+        },
+        "type": "Switch"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {},
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "schema": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "intent": {
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    }
+  },
+  "parameters": {}
+}
